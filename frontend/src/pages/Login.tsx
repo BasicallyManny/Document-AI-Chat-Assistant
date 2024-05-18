@@ -3,10 +3,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { Row, Container, Col } from 'react-bootstrap';
+import {React,} from 'react'
 
 import { IoEnterOutline } from "react-icons/io5";
-
-
 
 interface LoginProps {
     onHide: () => void;
@@ -41,7 +40,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 </Form>
                 <Row>
                     <h1 className="text-white !text-xs	-">Don't have an account? 
-                        <a className="text-purple-500 underline pl-1" href="/register">Register</a>
+                        <a href="/register" className="text-purple-500 underline pl-1">Register</a>
                     </h1>
                 </Row>
             </Modal.Body>
