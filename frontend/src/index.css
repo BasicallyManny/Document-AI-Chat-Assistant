@@ -3,5 +3,5 @@
 @import "tailwindcss/utilities";
 
 .modal-backdrop{
-    opacity:0.6 !important;
+    opacity:0.9 !important;
 }
