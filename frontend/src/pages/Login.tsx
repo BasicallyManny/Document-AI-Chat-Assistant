@@ -1,17 +1,38 @@
-
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { Row, Container, Col } from 'react-bootstrap';
-import {React,} from 'react'
 
-import { IoEnterOutline } from "react-icons/io5";
+import axios from 'axios';
+
 
 interface LoginProps {
     onHide: () => void;
 }
 
+interface FormData {
+    email: string;
+    password: string;
+}
+
 const Login: React.FC<LoginProps> = (props) => {
+    const [data, setData] = useState<FormData>({
+        email: '',
+        password: ''
+    });
+
+    const loginUser = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        //login logic
+        axios.get('/')
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setData(prevData => ({ ...prevData, [name]: value }));
+    };
+
     return (
         <Modal
             {...props}
@@ -30,27 +51,41 @@ const Login: React.FC<LoginProps> = (props) => {
                 </Container>
             </Modal.Header>
             <Modal.Body className="bg-gray-950">
-                <Form>
+                <Form onSubmit={loginUser}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Control type="email" placeholder="Enter Email" />
+                        <Form.Control
+                            type="email"
+                            name="email"
+                            placeholder="Enter Email"
+                            value={data.email}
+                            onChange={handleChange}
+                        />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={data.password}
+                            onChange={handleChange}
+                        />
                     </Form.Group>
+                    <Row className="justify-content-center mb-4 mt-4">
+                        <Col xs="auto">
+                            <Button type="submit" variant="outline" className="text-purple-500 border-purple-500 hover:bg-purple-500 hover:text-white">
+                                Login
+                            </Button>
+                        </Col>
+                    </Row>
                 </Form>
                 <Row>
-                    <h1 className="text-white !text-xs	-">Don't have an account? 
+                    <h1 className="text-white !text-xs -">
+                        Don't have an account?
                         <a href="/register" className="text-purple-500 underline pl-1">Register</a>
                     </h1>
                 </Row>
             </Modal.Body>
-            <Modal.Footer className="bg-gray-950">
-                <Button type="submit" variant="outline" className="text-purple-500 border-purple-500 hover:bg-purple-500 hover:text-white">
-                    <IoEnterOutline size={20}></IoEnterOutline>
-                </Button>
-            </Modal.Footer>
         </Modal>
-
     );
 };
 
