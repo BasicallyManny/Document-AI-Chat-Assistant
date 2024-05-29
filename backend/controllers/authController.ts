@@ -1,10 +1,14 @@
-import { Request, Response } from 'express';
-import User from '../models/user';  // Use ES6 import syntax if supported
+import { Request, Response } from 'express'; //imported to provide type definitions for the request and response objects used in the route handlers
+import User from '../models/user';  // Mongoose model for user data.
 
+
+//handles GET requests to the test route.
 const test = (req: Request, res: Response): void => {
     res.json("Test is working");
 };
 
+
+//handles POST requests to the register route.
 const registerUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { name, email, password } = req.body;

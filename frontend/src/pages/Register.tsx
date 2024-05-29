@@ -50,7 +50,7 @@ const Register: React.FC = () => {
                     password: ''
                 });
                 toast.success('Registration Successful. Welcome');
-                navigate('/Home');
+                navigate('/Home'); //upon login navigate to home page
             }
         } catch (error: unknown) {
             console.error('Registration failed:', error);
