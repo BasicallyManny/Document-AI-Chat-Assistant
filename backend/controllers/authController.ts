@@ -11,7 +11,7 @@ const test = (req: Request, res: Response): void => {
 //handles POST requests to the register route.
 const registerUser = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password } = req.body; //collect registration data from the DOM
         
         // Check if name is provided
         if (!name) {
@@ -38,7 +38,7 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-        // Create new user
+        //Creates a new user document in the MongoDB database using the User model.
         const user = await User.create({ 
             name, email, password 
         });

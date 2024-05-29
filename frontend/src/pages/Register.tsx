@@ -8,6 +8,8 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
+
+//define types for data
 interface FormData {
     name: string;
     email: string;
@@ -15,7 +17,7 @@ interface FormData {
 }
 
 const Register: React.FC = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); //for easy navigation to different routes
 
     const [data, setData] = useState<FormData>({
         name: '',
@@ -23,10 +25,11 @@ const Register: React.FC = () => {
         password: ''
     });
 
+    //handle form submission 
     const registerUser = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault();
+        e.preventDefault(); // Prevents the default form submission behavior.
         // Destructure data
-        const { name, email, password } = data;
+        const { name, email, password } = data; //Extracts name, email, and password from the data state.
 
         // Check for empty fields
         if (!name || !email || !password) {
@@ -35,6 +38,7 @@ const Register: React.FC = () => {
         }
 
         try {
+            //Send a POST request to the /register endpoint with the form data using axios.
             const response = await axios.post('/register', {
                 name, email, password
             });
@@ -50,9 +54,9 @@ const Register: React.FC = () => {
                     password: ''
                 });
                 toast.success('Registration Successful. Welcome');
-                navigate('/Home'); //upon login navigate to home page
+                navigate('/Home'); //if successful navigate to home page
             }
-        } catch (error: unknown) {
+        } catch (error: unknown) { //error handling
             console.error('Registration failed:', error);
             if (error.response && error.response.data && error.response.data.error) {
                 // Custom error handling based on the error message
@@ -68,9 +72,10 @@ const Register: React.FC = () => {
         }
     };
 
-    // Handle updates helper
+    // Handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target;
+        const { name, value } = e.target; 
+        //Update data state with the new value for the respective field
         setData(prevData => ({ ...prevData, [name]: value }));
     };
 
