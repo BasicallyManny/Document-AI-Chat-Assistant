@@ -8,37 +8,44 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-
-//define types for data
+// Define types for data
 interface FormData {
     name: string;
     email: string;
     password: string;
+    repeatPassword: string;
 }
 
 const Register: React.FC = () => {
-    const navigate = useNavigate(); //for easy navigation to different routes
+    const navigate = useNavigate(); // For easy navigation to different routes
 
     const [data, setData] = useState<FormData>({
         name: '',
         email: '',
-        password: ''
+        password: '',
+        repeatPassword: ''
     });
 
-    //handle form submission 
+    // Handle form submission
     const registerUser = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault(); // Prevents the default form submission behavior.
         // Destructure data
-        const { name, email, password } = data; //Extracts name, email, and password from the data state.
+        const { name, email, password, repeatPassword } = data; // Extracts name, email, password, and repeatPassword from the data state.
 
         // Check for empty fields
-        if (!name || !email || !password) {
-            toast.error('Please fill in all fields: Name, Email, and Password');
+        if (!name || !email || !password || !repeatPassword) {
+            toast.error('Please fill in all fields: Name, Email, Password, and Repeat Password');
+            return;
+        }
+
+        // Check if passwords match
+        if (password !== repeatPassword) {
+            toast.error('Passwords do not match. Please try again.');
             return;
         }
 
         try {
-            //Send a POST request to the /register endpoint with the form data using axios.
+            // Send a POST request to the /register endpoint with the form data using axios.
             const response = await axios.post('/register', {
                 name, email, password
             });
@@ -51,12 +58,13 @@ const Register: React.FC = () => {
                 setData({
                     name: '',
                     email: '',
-                    password: ''
+                    password: '',
+                    repeatPassword: ''
                 });
                 toast.success('Registration Successful. Welcome');
-                navigate('/Home'); //if successful navigate to home page
+                navigate('/Home'); // If successful, navigate to home page
             }
-        } catch (error: unknown) { //error handling
+        } catch (error: unknown) { // Error handling
             console.error('Registration failed:', error);
             if (error.response && error.response.data && error.response.data.error) {
                 // Custom error handling based on the error message
@@ -74,8 +82,8 @@ const Register: React.FC = () => {
 
     // Handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target; 
-        //Update data state with the new value for the respective field
+        const { name, value } = e.target;
+        // Update data state with the new value for the respective field
         setData(prevData => ({ ...prevData, [name]: value }));
     };
 
@@ -126,6 +134,9 @@ const Register: React.FC = () => {
                                         type="password"
                                         placeholder="Repeat your password"
                                         id="form4"
+                                        name="repeatPassword"
+                                        value={data.repeatPassword}
+                                        onChange={handleChange}
                                     />
                                 </Form.Group>
                                 <Row className="justify-content-center">
