@@ -47,7 +47,7 @@ const Login: React.FC<LoginProps> = (props) => {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data.error || 'Login request failed');
             } else {
-                toast.error('Login request failed');
+                toast.error('Login request failed please try again later');
             }
         }
     };
