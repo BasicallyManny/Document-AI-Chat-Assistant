@@ -55,5 +55,40 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
+//Login in point
+const loginUser = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { email, password } = req.body; //collect login data from DOM
+
+        // Check if the user exists in the database
+        const user = await User.findOne({ email });
+        if (!user) {
+            res.status(400).json({
+                error: 'Sorry, E-Mail not recognized'
+            });
+            return;
+        }
+
+        // Check if passwords match
+        const match = await comparePassword(password, user.password);
+        
+        // If matches is true assign JWT
+        if (match) {
+            res.json("Passwords Match");
+        } else {
+            res.status(400).json({
+                error: "Incorrect Password"
+            });
+        }
+    } catch (error) {
+        console.error('Login failed:', error);  // Log the error
+        if (error instanceof Error) {
+            res.status(500).json({ error: "Internal Server Error" });
+        } else {
+            res.status(500).json({ error: "Unexpected Error" });
+        }
+    }
+}
+
 // Export
-export { test, registerUser };
+export { test, registerUser, loginUser };

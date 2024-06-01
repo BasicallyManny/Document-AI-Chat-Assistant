@@ -5,9 +5,12 @@ import Form from 'react-bootstrap/Form';
 import { Row, Container, Col } from 'react-bootstrap';
 
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 
 interface LoginProps {
+    show: boolean;
     onHide: () => void;
 }
 
@@ -17,20 +20,41 @@ interface FormData {
 }
 
 const Login: React.FC<LoginProps> = (props) => {
+    const navigate = useNavigate();
     const [data, setData] = useState<FormData>({
         email: '',
         password: ''
     });
 
-    const loginUser = (e: React.FormEvent<HTMLFormElement>) => {
+    const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //login logic
-        axios.get('/')
+        const { email, password } = data;
+
+        try {
+            const response = await axios.post('/login', { email, password });
+            const responseData = response.data;
+
+            if (responseData.error) {
+                toast.error(responseData.error);
+            } else {
+                setData({ email: '', password: '' });
+                toast.success('Login Successful');
+                props.onHide(); // Close the modal upon successful login
+                navigate('/');
+            }
+        } catch (error: unknown) {
+            console.error('Login request failed:', error);
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data.error || 'Login request failed');
+            } else {
+                toast.error('Login request failed');
+            }
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setData(prevData => ({ ...prevData, [name]: value }));
+        setData((prevData) => ({ ...prevData, [name]: value }));
     };
 
     return (
