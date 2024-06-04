@@ -1,5 +1,5 @@
 # Document-AI-Chat-Assistant
-{Name} is a sophisticated AI writing assistant to help you research, analyze, and construct top-quality essays on any topic. If you are already with the essay prompt or question you want to answer, EssayMate is set to work.
+{Name} is a sophisticated AI writing assistant to help you research, analyze, and construct top-quality essays on any topic. If you already have the essay prompt or question you want to answer, {Name} is set to work.
 
 
 # Tech Stack
@@ -10,7 +10,7 @@
    1. React
     - A JavaScript library that helps build user interfaces. It allows the implementation
       of reusable UI components, making the development process more
-      efficient and the code more readable.
+      efficient and the code readable.
   2. TypeScript
     - A statically typed and compiled extension of JavaScript that increases the quality
       and maintainability of code by detecting and capturing errors
