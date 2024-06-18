@@ -1,21 +1,33 @@
-const express = require('express');
-const dotenv=require('dotenv').config();
-const cors=require('cors'); //accept requests from different origins.
-const {mongoose}=require('mongoose');
-import cookieParser from 'cookie-parser'; // allows transfer of cookies between hosts
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
+import authRoutes from './routes/authRoutes';
 
-//Set up express server and connect it to mongo
+// Load environment variables
+dotenv.config();
 
-//connect to database
-mongoose.connect(process.env.MONGO_URL).then(()=>console.log('Database Connected')).catch((err:Error)=>console.log('Failed to connect to database',err))
-//initialize express server
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URL as string)
+  .then(() => console.log('Database Connected'))
+  .catch((err: Error) => console.log('Failed to connect to database', err));
+
+// Initialize express server
 const app = express();
-//middleware
-app.use(express.json());// parse incoming requests with JSON payloads.
-app.use('/',require('./routes/authRoutes')) //sets up route handling 
-app.use(cookieParser()); //Cookie Parser Middle warehouse
+
+// Middleware
+app.use(cors({
+  credentials: true, // Allow cookies to be sent in cross-origin requests
+  origin: 'http://localhost:5173' // Only allow requests from this origin
+}));
+app.use(express.json()); // Parse incoming requests with JSON payloads
+app.use(cookieParser()); // Cookie Parser Middleware
 app.use(express.urlencoded({ extended: false }));
 
-//initialze port
-const port = 8000
-app.listen(port,()=>console.log(`Server is running on port ${port}`))
+// Routes
+app.use('/', authRoutes); // Use the authRoutes for handling authentication-related routes
+
+// Initialize port
+const port = 8000;
+app.listen(port, () => console.log(`Server is running on port ${port}`));

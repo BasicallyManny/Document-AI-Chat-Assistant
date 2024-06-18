@@ -1,21 +1,21 @@
-//import modules
-const express = require('express');
-const router = express.Router(); //used to create a new router object to handle routes.
-const cors = require('cors'); //For handling HTTP requests
-const {test,registerUser,loginUser} =require('../controllers/authController') //route handlers from authController
+import express from 'express';
+import cors from 'cors';
+import { test, registerUser, loginUser, getProfile } from '../controllers/authController';
 
-// apply the CORS middleware to the router.
+const router = express.Router();
+
+// Apply CORS middleware
 router.use(
-    cors({
-        credentials:true, //Allow cookies to be sent in cross-origin requests.
-        origin:'http://localhost:5173' //only allow cookies from frontend
-    })
+  cors({
+    credentials: true, // Allow cookies to be sent in cross-origin requests
+    origin: 'http://localhost:5173' // Only allow requests from this origin
+  })
 );
 
-//define routes
-router.get('/', test)
-router.post('/register',registerUser)
-router.post('/login',loginUser)
+// Define routes
+router.get('/', test);
+router.post('/register', registerUser);
+router.post('/login', loginUser);
+router.get('/profile', getProfile);
 
-//export express
-module.exports = router;
+export default router;
