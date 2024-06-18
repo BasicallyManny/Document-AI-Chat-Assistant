@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Image } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 import Robot from '../assets/robot.gif';
 
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-// Define types for data
 interface FormData {
     name: string;
     email: string;
@@ -17,8 +17,7 @@ interface FormData {
 }
 
 const Register: React.FC = () => {
-    const navigate = useNavigate(); // For easy navigation to different routes
-
+    const navigate = useNavigate();
     const [data, setData] = useState<FormData>({
         name: '',
         email: '',
@@ -26,26 +25,25 @@ const Register: React.FC = () => {
         repeatPassword: ''
     });
 
-    // Handle form submission
-    const registerUser = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault(); // Prevents the default form submission behavior.
-        // Destructure data
-        const { name, email, password, repeatPassword } = data; // Extracts name, email, password, and repeatPassword from the data state.
+    // States for toggling password visibility
+    const [showPassword, setShowPassword] = useState(false);
+    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
-        // Check for empty fields
+    const registerUser = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault();
+        const { name, email, password, repeatPassword } = data;
+
         if (!name || !email || !password || !repeatPassword) {
             toast.error('Please fill in all fields: Name, Email, Password, and Repeat Password');
             return;
         }
 
-        // Check if passwords match
         if (password !== repeatPassword) {
             toast.error('Passwords do not match. Please try again.');
             return;
         }
 
         try {
-            // Send a POST request to the /register endpoint with the form data using axios.
             const response = await axios.post('/register', {
                 name, email, password
             });
@@ -62,12 +60,11 @@ const Register: React.FC = () => {
                     repeatPassword: ''
                 });
                 toast.success('Registration Successful. Welcome');
-                navigate('/Home'); // If successful, navigate to home page
+                navigate('/Home');
             }
-        } catch (error: unknown) { // Error handling
+        } catch (error: unknown) {
             console.error('Registration failed:', error);
-            if (error.response && error.response.data && error.response.data.error) {
-                // Custom error handling based on the error message
+            if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.error) {
                 const errorMessage = error.response.data.error;
                 if (errorMessage.includes('Email is already taken')) {
                     toast.error('Email already exists. Please use a different email.');
@@ -80,11 +77,17 @@ const Register: React.FC = () => {
         }
     };
 
-    // Handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
-        // Update data state with the new value for the respective field
         setData(prevData => ({ ...prevData, [name]: value }));
+    };
+
+    const toggleShowPassword = (): void => {
+        setShowPassword(prevShow => !prevShow);
+    };
+
+    const toggleShowRepeatPassword = (): void => {
+        setShowRepeatPassword(prevShow => !prevShow);
     };
 
     return (
@@ -95,7 +98,7 @@ const Register: React.FC = () => {
                         <Col xs={12} lg={6} className="order-2 order-lg-1 d-flex flex-column align-items-center">
                             <p className="text-purple-500 text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-4">SIGN UP</p>
                             <Form className="w-100" onSubmit={registerUser}>
-                                <Form.Group className="mb-4 d-flex flex-row align-items-center">
+                                <Form.Group className="mb-4 d-flex flex-row align-items-center position-relative">
                                     <i className="bi bi-person me-3"></i>
                                     <Form.Control
                                         type="text"
@@ -106,7 +109,7 @@ const Register: React.FC = () => {
                                         onChange={handleChange}
                                     />
                                 </Form.Group>
-                                <Form.Group className="mb-4 d-flex flex-row align-items-center">
+                                <Form.Group className="mb-4 d-flex flex-row align-items-center position-relative">
                                     <i className="bi bi-envelope me-3"></i>
                                     <Form.Control
                                         type="email"
@@ -117,27 +120,43 @@ const Register: React.FC = () => {
                                         onChange={handleChange}
                                     />
                                 </Form.Group>
-                                <Form.Group className="mb-4 d-flex flex-row align-items-center">
+                                <Form.Group className="mb-4 d-flex flex-row align-items-center position-relative">
                                     <i className="bi bi-lock me-3"></i>
                                     <Form.Control
-                                        type="password"
+                                        type={showPassword ? 'text' : 'password'}
                                         placeholder="Password"
                                         id="form3"
                                         name="password"
                                         value={data.password}
                                         onChange={handleChange}
                                     />
+                                    <Button
+                                        variant="link"
+                                        className="position-absolute end-0 translate-middle-y"
+                                        onClick={toggleShowPassword}
+                                        style={{ color: 'purple', top: '50%', transform: 'translateY(-50%)' }}
+                                    >
+                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </Button>
                                 </Form.Group>
-                                <Form.Group className="mb-4 d-flex flex-row align-items-center">
+                                <Form.Group className="mb-4 d-flex flex-row align-items-center position-relative">
                                     <i className="bi bi-key me-3"></i>
                                     <Form.Control
-                                        type="password"
+                                        type={showRepeatPassword ? 'text' : 'password'}
                                         placeholder="Repeat your password"
                                         id="form4"
                                         name="repeatPassword"
                                         value={data.repeatPassword}
                                         onChange={handleChange}
                                     />
+                                    <Button
+                                        variant="link"
+                                        className="position-absolute end-0 translate-middle-y"
+                                        onClick={toggleShowRepeatPassword}
+                                        style={{ color: 'purple', top: '50%', transform: 'translateY(-50%)' }}
+                                    >
+                                        {showRepeatPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </Button>
                                 </Form.Group>
                                 <Row className="justify-content-center">
                                     <Button type="submit" variant="outline" className="w-2/5 text-purple-500 border-purple-500 hover:bg-purple-500 hover:text-white">

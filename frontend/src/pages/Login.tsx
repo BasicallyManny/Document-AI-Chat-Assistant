@@ -3,11 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { Row, Container, Col } from 'react-bootstrap';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-
 
 interface LoginProps {
     show: boolean;
@@ -25,6 +25,7 @@ const Login: React.FC<LoginProps> = (props) => {
         email: '',
         password: ''
     });
+    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
     const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -57,6 +58,10 @@ const Login: React.FC<LoginProps> = (props) => {
         setData((prevData) => ({ ...prevData, [name]: value }));
     };
 
+    const toggleShowPassword = () => {
+        setShowPassword((prevShow) => !prevShow);
+    };
+
     return (
         <Modal
             {...props}
@@ -76,34 +81,40 @@ const Login: React.FC<LoginProps> = (props) => {
             </Modal.Header>
             <Modal.Body className="bg-gray-950">
                 <Form onSubmit={loginUser}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3 position-relative" controlId="formBasicEmail">
                         <Form.Control
                             type="email"
                             name="email"
                             placeholder="Enter Email"
                             value={data.email}
                             onChange={handleChange}
+                            required
                         />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3 position-relative" controlId="formBasicPassword">
                         <Form.Control
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             name="password"
                             placeholder="Password"
                             value={data.password}
                             onChange={handleChange}
+                            required
                         />
+                        <Button
+                            variant="link"
+                            className="position-absolute end-0 translate-middle-y"
+                            onClick={toggleShowPassword}
+                            style={{ color: 'purple', top: '50%', transform: 'translateY(-50%)' }}
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </Button>
                     </Form.Group>
-                    <Row className="justify-content-center mb-4 mt-4">
-                        <Col xs="auto">
-                            <Button type="submit" variant="outline" className="text-purple-500 border-purple-500 hover:bg-purple-500 hover:text-white">
-                                Login
-                            </Button>
-                        </Col>
-                    </Row>
+                    <Button type="submit" variant="outline" className="text-purple-500 border-purple-500 hover:bg-purple-500 hover:text-white mt-2">
+                        Login
+                    </Button>
                 </Form>
                 <Row>
-                    <h1 className="text-white !text-xs -">
+                    <h1 className="mt-5 mb-2 text-white !text-xs -">
                         Don't have an account?
                         <a href="/register" className="text-purple-500 underline pl-1">Register</a>
                     </h1>
