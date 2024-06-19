@@ -35,7 +35,7 @@ html {
   /* Media queries for responsive typography */
   @media (max-width: 768px) {
     html {
-      font-size: 14px; /* Adjust base font size for smaller screens */
+      font-size: 18px; 
     }
   
     h1 {
@@ -47,17 +47,17 @@ html {
     }
   
     p {
-      font-size: 0.875rem; /* Adjust font size as needed */
+      font-size: 0.875rem;
     }
   }
   
   @media (max-width: 480px) {
     html {
-      font-size: 12px; /* Further adjust base font size for very small screens */
+      font-size: 16px; 
     }
   
     h1 {
-      font-size: 1.75rem; /* Adjust font size for very small screens */
+      font-size: 1.75rem;
     }
   
     h2 {
@@ -65,7 +65,7 @@ html {
     }
   
     p {
-      font-size: 0.75rem; /* Adjust font size as needed */
+      font-size: 0.75rem; 
     }
   }
 
