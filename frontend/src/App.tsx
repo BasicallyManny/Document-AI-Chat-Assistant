@@ -18,7 +18,7 @@ axios.defaults.withCredentials = true;
 function App() {
   return (
     <UserContextProvider>
-      <Navbar />
+      <Navbar/>
       {/**Cool Notifications Library */}
       <Toaster position='bottom-right' toastOptions={{duration: 3000}}/> 
       <Routes>

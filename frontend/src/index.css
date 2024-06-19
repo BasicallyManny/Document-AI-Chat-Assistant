@@ -2,6 +2,142 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-.modal-backdrop{
-    opacity:0.6 !important;
+
+/* Reset default browser styles */
+html {
+    font-size: 16px; /* Base font size */
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif; /* Example font family */
+    line-height: 1.6; /* Example line height */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Responsive typography */
+  h1 {
+    font-size: 2.5rem; /* Example default font size */
+    margin-bottom: 1rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+  
+  /* Media queries for responsive typography */
+  @media (max-width: 768px) {
+    html {
+      font-size: 14px; /* Adjust base font size for smaller screens */
+    }
+  
+    h1 {
+      font-size: 2rem; /* Decrease font size for smaller screens */
+    }
+  
+    h2 {
+      font-size: 1.75rem;
+    }
+  
+    p {
+      font-size: 0.875rem; /* Adjust font size as needed */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    html {
+      font-size: 12px; /* Further adjust base font size for very small screens */
+    }
+  
+    h1 {
+      font-size: 1.75rem; /* Adjust font size for very small screens */
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    p {
+      font-size: 0.75rem; /* Adjust font size as needed */
+    }
+  }
+
+  
+.modal-backdrop {
+  opacity: 0.6 !important;
+}
+
+.overlay-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.wave {
+  animation-name: wave-animation; /* Refers to the name of your @keyframes element below */
+  animation-duration: 2.1s; /* Change to speed up or slow down */
+  animation-iteration-count: infinite; /* Never stop waving :) */
+  transform-origin: 70% 70%; /* Pivot around the bottom-left palm */
+  display: inline-block;
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(14deg);
+  } /* The following five values can be played with to make the waving more or less extreme */
+  20% {
+    transform: rotate(-8deg);
+  }
+  30% {
+    transform: rotate(14deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  } /* Reset for the last half to pause */
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/*
+* Type Writter Effect Animations
+*/
+.Typewriter__wrapper {
+  font-size: 2.2em !important;
+  color: #be6adf !important;
+  font-weight: 600 !important;
+}
+.Typewriter__cursor {
+  font-size: 2.4em !important;
+  color: #b562d6 !important;
+}
+
+@media (max-width: 100px) {
+  .Typewriter__wrapper {
+    font-size: 1.4em !important;
+    font-weight: 500 !important;
+    position: absolute !important;
+  }
+  .Typewriter__cursor {
+    display: none !important;
+  }
 }
