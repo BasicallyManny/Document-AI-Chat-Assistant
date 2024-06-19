@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
 import spacebg from '../assets/spacebg.mp4';
 import Type from '../components/tools/Type';
 
@@ -40,7 +39,7 @@ const Home: React.FC = () => {
                     <h2 className="text-xl md:text-4xl lg:text-4xl font-bold text-center mb-4 sm:mb-8">
                         I'm <strong className="text-purple-300">NAME_TO_BE_DETERMINED</strong>
                     </h2>
-                    <p className="text-base md:text-xl lg:text-xl text-center mb-4 sm:mb-8 max-w-prose px-4">
+                    <p className="text-base md:text-2xl lg:text-2xl text-center mb-4 sm:mb-8 max-w-prose px-4">
                         Your Own Personal:
                     </p>
 
@@ -54,21 +53,10 @@ const Home: React.FC = () => {
                     </div>
                     {/* Type Animation */}
 
-                    <p className="text-sm md:text-base lg:text-lg text-center mt-4 max-w-prose px-4">
+                    <p className="text-sm md:text-lg lg:text-xl text-center mt-4 max-w-prose px-4">
                         If you have any questions or need information, it would be my pleasure to assist you. Whether it's a general tech query, a history question, a writing issue, or a coding predicament, feel free to ask!
                     </p>
                 </div>
-            </section>
-            {/* Additional Sections */}
-            <section className="py-8 bg-gray-100">
-                <Container>
-                    <p className="text-center text-lg md:text-2xl lg:text-3xl">About Component</p>
-                </Container>
-            </section>
-            <section id="routeMessageBoard" className="py-8 bg-gray-200">
-                <Container>
-                    <p className="text-center text-lg md:text-2xl lg:text-3xl">Try App</p>
-                </Container>
             </section>
         </div>
     );
