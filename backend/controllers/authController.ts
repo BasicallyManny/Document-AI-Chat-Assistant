@@ -83,6 +83,21 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const logoutUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Clear the token cookie
+    res.clearCookie('token').json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error('Logout failed:', error);
+    if (error instanceof Error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(500).json({ error: 'Unexpected Error' });
+    }
+  }
+};
+
+
 const getProfile = (req: Request, res: Response): void => {
   const { token } = req.cookies;
 
@@ -100,4 +115,4 @@ const getProfile = (req: Request, res: Response): void => {
   }
 };
 
-export { test, registerUser, loginUser, getProfile };
+export { test, registerUser, loginUser, getProfile, logoutUser };
