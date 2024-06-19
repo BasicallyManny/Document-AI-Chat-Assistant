@@ -4,6 +4,7 @@ import { HiMenu } from 'react-icons/hi';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Login from '../pages/Login';
+import { useNavigate} from 'react-router-dom';
 import { AiOutlineMail, AiOutlineHome, AiOutlineBranches, AiFillInfoCircle } from 'react-icons/ai';
 
 interface NavigationItem {
@@ -45,7 +46,7 @@ function classNames(...classes: string[]): string {
 const Navbar: React.FC = () => {
     const [modalShow, setModalShow] = useState(false);
 
-    const history = useHistory();
+    const history = useNavigate();
 
     const handleLogout = async () => {
         try {
