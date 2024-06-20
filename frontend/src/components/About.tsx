@@ -44,8 +44,8 @@ export default function About() {
                         transition={{ duration: 1, delay: 0.3 }}
                         className="text-lg lg:text-xl mb-6 leading-relaxed text-center"
                     >
-                        Discover the power of AI with ___ - your ultimate companion for crafting insightful essays. Powered by OpenAI's ChatGPT and Anthropic's Claude,
-                        our AI assistant is designed to help you research, analyze, and compose top-tier academic papers on any subject.
+                        Discover the power of ___ - your ultimate companion for crafting insightful essays. Powered by OpenAI's ChatGPT and Anthropic's ClaudeAI,
+                        ___ is designed to help you research, analyze, and compose top-tier academic papers on any subject.
                     </motion.p>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -53,7 +53,7 @@ export default function About() {
                         transition={{ duration: 1, delay: 0.5 }}
                         className="text-lg lg:text-xl mb-6 leading-relaxed text-center"
                     >
-                        Leveraging LangChain, a cutting-edge Python framework, ___ integrates multiple language models seamlessly, offering unparalleled text processing capabilities.
+                        Leveraging LangChain, a cutting-edge Python framework, ___ integrates multiple large language models seamlessly, offering unparalleled text processing capabilities.
                         Whether you're facing a challenging essay prompt or seeking expert guidance, ___ is your go-to solution.
                     </motion.p>
                     <motion.p

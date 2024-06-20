@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import spacebg from '../assets/spacebg.mp4';
 import Type from '../components/tools/Type';
 
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+
 // Home component is the main component of the landing page. It renders a video in the background and a series of motion elements to display text and animations.
 const Home: React.FC = () => {
     // Create a reference to the video element
@@ -100,6 +103,18 @@ const Home: React.FC = () => {
                         className="text-sm md:text-lg lg:text-xl text-center mt-4 max-w-prose px-4"
                     >
                         If you have any questions or need information, it would be my pleasure to assist you. Whether it's a general tech query, a history question, a writing issue, or a coding predicament, feel free to ask!
+                    </motion.p>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, delay: 0.9 }}
+                        className="text-sm md:text-lg lg:text-xl text-center mt-4 max-w-prose px-4"
+                    >
+                        <Link to="/about">
+                            <Button variant="outline" className="text-purple-500 border-purple-500 hover:bg-purple-500 hover:text-white rounded-md">
+                                Learn More
+                            </Button>
+                        </Link>
                     </motion.p>
                 </motion.div>
             </section>
